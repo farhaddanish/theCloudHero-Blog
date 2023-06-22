@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}<title>TheCloudHeros - Registeritions</title>{% endblock  %}
+{% block style %}
+
+    <link rel="stylesheet" type="text/css" href="{% static 'fonts/iconic/css/material-design-iconic-font.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'accounts/util.css' %}" />
+    <link rel="stylesheet" href="{% static 'accounts/main.css' %}" />
+    
+{% endblock  %}
+
+{% block content %} 
+   <div class="limiter">
+		<div class="container-login100">
+			<div class="wrap-login100">
+				<form class="login100-form validate-form" action="{% url 'signup' %}" method="POST">
+                {% csrf_token %}
+					<span class="login100-form-title p-b-26">
+						Sign Up 
+					</span>
+					<div class="wrap-input100 validate-input"  data-validate="Enter FirstName">
+						{{form.first_Name}}
+						<span class="focus-input100 {% if form.email.errors %}  has_val_forEmail{% endif %}
+						{% if form.password2.errors %}has_val_forEmail{% endif %}" data-placeholder="First Name"></span>
+					</div>
+
+
+					<div class="wrap-input100 validate-input" data-validate = "Valid email is: a@b.c">
+                        {{form.email}}
+						<span class="focus-input100  {% if form.email.errors %}span-email  has_val_forEmail{% endif %}
+						{% if form.password2.errors %}has_val_forEmail{% endif %}" data-placeholder="Email"></span>   
+					</div>
+                    {{form.email.errors}}
+                    
+
+					<div class="wrap-input100 validate-input" data-validate="Enter password">
+						<span class="btn-show-pass">
+							<i class="zmdi zmdi-eye"></i>
+						</span>
+                        {{form.password1}}
+						<span class="focus-input100 {% if form.password1.errors %}span-password1{% endif %}" data-placeholder="Password"></span>
+					</div>
+                    {{form.password1.errors}}
+
+
+					<div class="wrap-input100 validate-input" data-validate="Enter password">
+						<span class="btn-show-pass">
+							<i class="zmdi zmdi-eye"></i>
+						</span>
+                        {{form.password2}}
+						<span class="focus-input100 {% if form.password2.errors %}span-password2{% endif %}" data-placeholder="Confirm your Password"></span>
+					</div>
+                    {{form.password2.errors}}
+
+
+					<div class="container-login100-form-btn">
+						<div class="wrap-login100-form-btn">
+							<div class="login100-form-bgbtn"></div>
+							<button class="login100-form-btn">
+								Sign Up
+							</button>
+						</div>
+					</div>
+					
+					<div class="text-center p-t-115">
+						<span class="txt1">
+							 have an account?
+						</span>
+
+						<a class="txt2" href="{% url 'login' %}">
+							Login
+						</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+
+{% endblock  %}
+
+
+
+{% block scripts %}
+
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" ></script>
+    {% comment %} <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9" ></script> {% endcomment %}
+	<script src="{% static 'bootstrap/jquery-3.5.1.min.js' %}" ></script>
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}" ></script>
+    <script src="{% static 'accounts/main.js' %}"></script>
+	
+{% endblock  %}
