@@ -1,0 +1,103 @@
+   <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand mr-5" href="{% url 'index' %}">TheCloudHeros</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse navbar-div" id="navbarNav">
+
+            <!-- small screen serach box -->
+                <div>
+                    <form action="{% url 'search' %}" method="GET"  class="SmallScreen form-small-serach">
+                        <label for="search2">Search for stuff</label>
+                        <input id="search2" name="search" type="text" placeholder="Search..."  required  autofocus/>
+                        <button type="submit" class="fa fa-search"></button>
+                    </form>
+                    <hr>
+                </div>
+
+
+                <ul class="navbar-nav mr-4 ul-nav-list">
+
+                    {% for mainItem in nav %}
+                    <li class="nav-item dropdown navbar-animation navbar-main-style mr-3 BigScreen">
+                        <a class="nav-link menu-item" href="{% url 'ArticleSubPart' mainItem.article_main_catagories %}" id="navbarDropdown">
+                            {{mainItem.article_main_catagories}}
+                        </a>
+                        {% if mainItem.article_sub_catagories.count != 0 %}
+                                <div class="dropdown-menu left-dropdown dropdown-show" aria-labelledby="navbarDropdown">
+                                    {% for dpItem in mainItem.article_sub_catagories.all %}
+                                    
+                                        <a class="dropdown-item" href="{% url 'SubCatagoriesPart' mainItem.article_main_catagories dpItem.slug %}">{{dpItem.article_sub_catagories|capfirst}}</a>
+                                    
+                                    {% endfor %}
+                                </div>
+                        {% endif %}
+                    </li>
+                    {% endfor %}
+
+
+
+                    <!-- Small Screen -->
+
+                    {% for mainItem in nav %}
+                    <li class="nav-item dropdown navbar-main-style mr-3 SmallScreen">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{mainItem.article_main_catagories|capfirst}}
+                        </a>
+                        <div class="dropdown-menu dropdown-show" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{% url 'ArticleSubPart' mainItem.article_main_catagories %}">{{mainItem.article_main_catagories|capfirst}}</a>
+                            {% for dpItem in  mainItem.article_sub_catagories.all %}
+                                <a class="dropdown-item" href="{% url 'SubCatagoriesPart' mainItem.article_main_catagories dpItem.slug %}">{{dpItem.article_sub_catagories|capfirst}}</a>
+                            {% endfor %}
+                        </div>
+                    </li>
+                    {% endfor %}
+
+
+
+
+                     <!-- Big Screen seacrh  box -->
+                    <li class="nav-item navbar-main-style mr-3 BigScreen">
+                        <a class="nav-link nav-account" id="search" href=""><i class="fa fa-search"></i></a>
+                    </li>
+
+
+
+
+                       {% comment %} account {% endcomment %}
+
+                    <li class="nav-item dropdown navbar-animation navbar-main-style mr-3">
+                        <a class="nav-link nav-account" href="#" id="navbarDropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                            <i class="fas fa-user-circle"></i>
+                        </a>
+                        {% if user.is_authenticated %}
+                        <div class="dropdown-menu left-dropdown dropdown-show" id="dropLogout" aria-labelledby="navbarDropdown">
+                        
+                                <a class="dropdown-item" href="{% url 'logout' request.path %}" >LogOut</a>  
+                        </div>
+                        {% else %}
+                        <div class="dropdown-menu left-dropdown dropdown-show" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{% url 'signup' %}">Create Account</a>
+                            <a class="dropdown-item" href="{% url 'login' %}">Login</a>
+                        </div>
+                        {% endif %}
+                    </li>
+                </ul>
+
+
+                <!-- big screen serach box -->
+                <div class="search-form BigScreen">
+                    <form action="{% url 'search' %}" method="GET">
+                        <input class="input-serach" type="text" name="search" placeholder="Search..." autofocus required />
+                    </form>
+                </div>
+
+                
+            </div>
+        </div>
+    </nav>

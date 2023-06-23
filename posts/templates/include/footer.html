@@ -1,0 +1,48 @@
+ <!-- Footer -->
+{% load static %}
+
+    <footer class="footer">
+        <div class="footer__logo__box">
+
+            <img src="{% static 'assets/IMG_2250.PNG' %}" alt="" width="300px" class="footer-logo" />
+
+        </div>
+        <div class="container ">
+            <div class="row">
+                <div class="col-md-6 float-left">
+                    <div class="footer__navigation">
+                        <ul class="footer__list">
+                            <li class="footer__item"><a href="{% url 'privacy' %}" class="footer__link">Company</a></li>
+                            <li class="footer__item"><a href="{% url 'privacy' %}" class="footer__link">Contact us</a></li>
+                            
+                            <li class="footer__item"><a href="{% url 'privacy' %}" class="footer__link">Privacy policy</a></li>
+                            <li class="footer__item"><a href="{% url 'privacy' %}" class="footer__link">Terms</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-6 float-left">
+                    <p class="footer__copyright">
+                        Built by <a href="{% url 'index' %}" class="footer__link">The CloudHeros</a> IT Managment Security System <a
+                            href="{% url 'privacy' %}" class="footer__link">Company</a>.
+                        Copyright &copy; by The CloudHeros You are 100% allowed to use this webpage for both personal
+                        and Business
+                    </p>
+                </div>
+            </div>
+
+
+
+            <div class="FollowPart text-center ">
+                <div class="icon-div">
+                    <span class="follow-span">Follow us : </span>
+                    <a class="icon" href="#"><i class="fab fa-facebook"></i></a>
+                    <a class="icon" href="#"><i class="fab fa-twitter"></i></a>
+                    <a class="icon" href="#"><i class="fab fa-linkedin"></i></a>
+                    <a class="icon" href="#"><i class="fab fa-google-plus-g"></i></a>
+                </div>
+                <div>
+                    <p class="follower-title">© 2021 Danish Software Group</p> <a class="folloer-ploiy" href="{% url 'privacy' %}">Privacy
+                        Policy</a./template/contact.html
+            </div>
+        </div>
+    </footer>

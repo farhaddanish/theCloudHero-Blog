@@ -1,0 +1,187 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}<title>The-CloudHeros - Catagories</title>{% endblock  %}
+
+{% block style %} 
+
+    <link rel="stylesheet" href="{% static 'posts/css/post-catagories.css' %}" />
+
+{% endblock  %}
+
+{% block content %}
+
+    {% include 'include/nav.html' %}
+
+ <!-- Header -->
+
+    <header class="headerPart">
+        <div class="header-container ">
+            {% if catagories == "windows" %}
+            <i class="fab fa-{{catagories|lower}} icon-haeding"></i>
+            {% else %}
+            <i class="fas fa-{{catagories|lower}} icon-haeding"></i>
+            {% endif %}
+
+            <h1 class="header-heading">{{catagories|capfirst}}</h1>
+        </div>
+    </header>
+
+
+
+    <!-- Deatils -->
+
+
+    <main class="container-fluid">
+        <section class="row sinlge-content p-5">
+            <div class="col-md-8 left-single-content p-4">
+                {% for post in  posts %}
+                <div class="card border-0">
+                    <div class="card-body row card-position">
+                        <div class="card-img col-md-5  float-left text-center">
+                            <a href="{% url 'articleDetails' post.catagories post.slug %}"> <img src="{{post.article_image.url}}" height="400px" width="auto"
+                                    class="img-fluid" alt=""></a>
+                        </div>
+                        <div class="col-md-7 float-left ">
+                            <h3 class="postSection-heading-title">{{post.article_caption|upper}} | INTERMEDIATE</h3>
+                            <h1 class="postSection-heading-anchor"><a href="{% url 'articleDetails' post.catagories post.slug %}">{{post.article_title|title|truncatewords:11}}</a></h1>
+                            <span class="postSection-date">{{post.article_author|capfirst}} | {{post.post_date}}</span>
+                            <p class="postSection-paragragh">{{post.article_describtion|capfirst|truncatewords:17}}</p>
+                        </div>
+                    </div>
+                </div>
+                
+                {% endfor %}
+
+                <!-- pagination -->
+
+                <nav aria-label="Page navigation example" class="pagination-nav">
+            <ul class="pagination justify-content-center pagination-lg">
+            {% if   posts.has_previous == True %}   
+                <li class="page-item" tabindex="-1"><a href="?page={{posts.previous_page_number}}" class="pagination-link page-link">Previous</a>
+                </li>
+            {% else %}
+            <li class="page-item disabled" tabindex="-1"><a href="#"  class="pagination-link page-link">Previous</a>
+                </li>
+            {% endif %}         
+            {% for  num  in posts.paginator.page_range %}
+                {% if posts.number == num %}
+                    <li class="page-item"><a href="?page={{num}}" class="pagination-link page-link text-light pagination-active">{{num}}</a></li>
+                    {% elif num > posts.number|add:'-2' and num < posts.number|add:'2' %}   
+                        <li class="page-item"><a href="?page={{num}}" class="pagination-link page-link btn-outline-info">{{num}}</a></li>
+                {% endif %}
+            {% endfor %}
+         {% if   posts.has_next == True %}   
+                <li class="page-item"><a href="?page={{posts.next_page_number}}" class="pagination-link page-link">Next</a></li>
+            {% else %}
+            <li class="page-item disabled"><a href="#" class="pagination-link page-link">Next</a></li>
+            {% endif %} 
+            
+            </ul>
+        </nav>
+            </div>
+
+            <div class="col-md-4 more-content">
+                <div class="more-content-div">
+                    <div class="small-newsLetter-div">
+                        <div class="small-titlefield">
+                            <h2 class="small-newsLetter-heading">SUBSCRIBE TO THECLOUDHEROS NEWSLETTERS</h2>
+
+                            <p class="small-newsLetter-paragraph text-justify">The CloudHeros.com shares the deep
+                                technology articles
+                                from
+                                MVPs and our own experts every Friday. Register for this weekly newsletter filled
+                                with
+                                the most impactful the CloudHeros.com articles from that week.
+                                <br> <br> Sign up for our newsletters here.</p>
+                        </div>
+
+                        <div class="small-emailfield">
+                            <form action="{{request.path}}" class="form" id="formNewsletter1" method="POST">
+                            {% csrf_token %}
+                                <input class="form-control small-form-input" name="email" required type="email" id="email1" placeholder="Email">
+                                <button class="btn btn-newsLetter" type="submit">Subscribe</button>
+                            </form>
+                        </div>
+                    </div>
+
+
+                    <!--  Related Articles -->
+
+
+
+                    <div class="moreArticles-div">
+                        <div class="more-heading-div">
+                            <h1 class="more-heading">Earlier Articles</h1>
+                            <hr class="horizontle">
+                        </div>
+                    {% if earlier.count == 0 %}
+                        <i class="fas fa-exclamation-triangle text-center text-danger icon-article-nothing"></i>
+                        <p class="heading-overview text-danger text-center ">We wil add some extra content soon ! </p>
+                    {% else %}
+                        {% for post in earlier %}
+                            <div class="row">
+                            <div class="col-md-12 mt-5">
+                                <div class="col-md-6 img-related float-left">
+                                    <a href="{% url 'articleDetails' post.catagories post.slug %}"><img src="{{post.article_image.url}}" class="img-fluid" width="auto"
+                                            height="200px" alt="{{post.article_title|capfirst}} Image"></a>
+                                </div>
+                                <div class="col-md-6 float-left mt-2 img-related">
+                                    <span class="span-a-overview">{{post.article_caption|upper}}</span>
+                                    <h4 class="heading-overview"><a href="{% url 'articleDetails' post.catagories post.slug %}">{{post.article_title|title|truncatewords:14}}</a></h4>
+                                    <span class="date-overview">{{post.post_date}} | {{posts.article_author|capfirst}} </span>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% endif %}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+
+
+
+
+
+
+    <!--  Big NewsLetter -->
+    <section class="newsLetter ">
+        <div class="newsLetter-div">
+            <div class="titlefield">
+                <h1 class="newsLetter-heading">SUBSCRIBE TO THECLOUDHEROS NEWSLETTERS</h1>
+                <p class="newsLetter-paragraph">Whether it’s Security or Cloud Computing, we have the
+                    know-how for you.
+                    <br> Sign up for our newsletters here.</p>
+            </div>
+
+            <div class="emailfield">
+                <form action="{{request.path}}" method="POST" class="form" id="formNewsletter2">
+                {% csrf_token %}
+                    <input class="form-control" name="email" required type="email" id="email2" placeholder="Email">
+                    <button class="btn btn-newsLetter" type="submit">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+
+
+
+    {% include 'include/footer.html' %}
+
+{% endblock  %}
+
+
+{% block scripts %}
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" ></script>
+    {% comment %} <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9" ></script> {% endcomment %}
+	<script src="{% static 'bootstrap/jquery-3.5.1.min.js' %}" ></script>
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}" ></script>
+    <script src="{% static 'posts/js/post-catagories.js' %}" ></script>
+
+{% endblock %}
+

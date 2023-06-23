@@ -1,0 +1,183 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}<title>The-CloudHeros</title>{% endblock  %}
+
+{% block style %}
+
+    <link rel="stylesheet" href="{% static 'posts/css/index.css' %}" />
+
+{% endblock  %}
+
+{% block content %}
+
+{% include 'include/nav.html' %}
+
+<!-- Header -->
+
+<header class="headerPart">
+    <div class="header-container">
+        <div class="header-left-section">
+            <div class="anchor_div">
+                <a class="header-anchor" href="{% url 'SubCatagoriesPart' "windows" "windows-10" %}">Windows10</a> <span class="anchor_span">,</span>
+                <a class="header-anchor" href="{% url 'SubCatagoriesPart' "windows" "windows-11" %}">Windows11</a><span class="anchor_span">,</span>
+                <a class="header-anchor" href="{% url 'SubCatagoriesPart' "windows" "windows-7" %}">Windows7</a>
+            </div>
+
+            <h1 class="main-heading">Microsoft Unveils Windows 11, <br> A Desktop in the Cloud</h1>
+            <p class="header-paragraph text-justify">This week, Microsoft is hosting its virtual Inspire conference
+                where the
+                company unveils solutions
+                and tools for their partners to help them build services on top of the company's platforms. For FY
+                2022, Microsoft is unveiling Windows..</p>
+        </div>
+        <div class="header-right-setion">
+            <img src="{% static 'assets/undraw_uploading_go67_copy2.png' %}" height="410px" width="auto"
+                alt="header-image" class="header-image" />
+        </div>
+        <div class="blueDiv container-fluid mt-5">
+            <br>
+        </div>
+    </div>
+</header>
+
+<br><br><br>
+<!-- blue Div -->
+
+<section class="postSection mt-5">
+    <div class="container">
+
+        {% for post in  venus %}
+        <div class="card  border-0">
+            <div class="card-body row card-position">
+                <div class="card-img col-md-4 float-left text-center">
+                    <a href="{% url 'articleDetails' post.catagories post.slug %}"> <img
+                            src="{{post.article_image.url}}" height="300px" width="300px" class="img-fluid img-post"
+                            alt="{{post.catagories|capfirst}} image"></a>
+                </div>
+                <div class="col-md-6 float-left">
+                    <h3 class="postSection-heading-title">{{post.article_caption|upper}} | INTERMEDIATE</h3>
+                    <h1 class="postSection-heading-anchor"><a
+                            href="{% url 'articleDetails' post.catagories  post.slug %}">{{post.article_title|title|truncatewords:11}}</a>
+                    </h1>
+                    <span class="postSection-date">{{post.article_author|capfirst}} | {{post.post_date}}</span>
+                    <p class="postSection-paragragh">{{post.article_describtion|capfirst|truncatewords:17}}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+
+        <!-- pagination -->
+
+        <nav aria-label="Page navigation example" class="pagination-nav">
+            <ul class="pagination justify-content-center pagination-lg">
+            {% if   venus.has_previous == True %}   
+                <li class="page-item" tabindex="-1"><a href="?page={{venus.previous_page_number}}" class="pagination-link page-link">Previous</a>
+                </li>
+            {% else %}
+            <li class="page-item disabled" tabindex="-1"><a href="#"  class="pagination-link page-link">Previous</a>
+                </li>
+            {% endif %}         
+            {% for  num  in venus.paginator.page_range %}
+                {% if venus.number == num %}
+                    <li class="page-item"><a href="?page={{num}}" class="pagination-link page-link text-light pagination-active">{{num}}</a></li>
+                    {% elif num > venus.number|add:'-2' and num < venus.number|add:'2' %}   
+                        <li class="page-item"><a href="?page={{num}}" class="pagination-link page-link btn-outline-info">{{num}}</a></li>
+                {% endif %}
+            {% endfor %}
+         {% if   venus.has_next == True %}   
+                <li class="page-item"><a href="?page={{venus.next_page_number}}" class="pagination-link page-link">Next</a></li>
+            {% else %}
+            <li class="page-item disabled"><a href="#" class="pagination-link page-link">Next</a></li>
+            {% endif %} 
+            
+            </ul>
+        </nav>
+    </div>
+</section>
+
+
+<!-- NewsLetter -->
+<section class="newsLetter ">
+    <div class="newsLetter-div">
+        <div class="titlefield">
+            <h1 class="newsLetter-heading">SUBSCRIBE TO THECLOUDHEROS NEWSLETTERS</h1>
+            <p class="newsLetter-paragraph">Whether it’s Security or Cloud Computing, we have the know-how for you.
+                <br> Sign up for our newsletters here.</p>
+        </div>
+
+        <div class="emailfield">
+            <form action="" class="form" id="formNewsletter" method="POST">
+                {% csrf_token %}
+                <input class="form-control" type="email" placeholder="Email" id="email" name="email" required>
+                <button class="btn btn-newsLetter">Subscribe</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+
+<footer class="footer">
+        <div class="footer__logo__box">
+
+            <img src="{% static 'assets/IMG_2250.PNG' %}" alt="" width="300px" class="footer-logo" />
+
+        </div>
+        <div class="footer-container">
+            <div class="footer-row">
+                <div class="col-md-6 float-left">
+                    <div class="footer__navigation">
+                        <ul class="footer__list">
+                            <li class="footer__item"><a href="{% url 'privacy' %}" class="footer__link">Company</a></li>
+                            <li class="footer__item"><a href="{% url 'privacy' %}" class="footer__link">Contact us</a></li>
+                            
+                            <li class="footer__item"><a href="{% url 'privacy' %}" class="footer__link">Privacy policy</a></li>
+                            <li class="footer__item"><a href="{% url 'privacy' %}" class="footer__link">Terms</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-6 float-left">
+                    <p class="footer__copyright">
+                        Built by <a href="{% url 'index' %}" class="footer__link">The CloudHeros</a> IT Managment Security System <a
+                            href="{% url 'privacy' %}" class="footer__link">Company</a>.
+                        Copyright &copy; by The CloudHeros You are 100% allowed to use this webpage for both personal
+                        and Business
+                    </p>
+                </div>
+            </div>
+
+
+
+            <div class="FollowPart text-center ">
+                <div class="icon-div">
+                    <span class="follow-span">Follow us : </span>
+                    <a class="icon" href="#"><i class="fab fa-facebook"></i></a>
+                    <a class="icon" href="#"><i class="fab fa-twitter"></i></a>
+                    <a class="icon" href="#"><i class="fab fa-linkedin"></i></a>
+                    <a class="icon" href="#"><i class="fab fa-google-plus-g"></i></a>
+                </div>
+                <div>
+                    <p class="follower-title">© 2021 Danish Software Group</p> <a class="folloer-ploiy" href="{% url 'privacy' %}">Privacy
+                        Policy</a./template/contact.html
+            </div>
+        </div>
+    </footer>
+
+
+
+
+
+
+{% endblock  %}
+
+
+{% block scripts %}
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" ></script>
+    {% comment %} <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9" ></script> {% endcomment %}
+	<script src="{% static 'bootstrap/jquery-3.5.1.min.js' %}" ></script>
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}" ></script>
+	<script src="{% static 'posts/js/index.js' %}"  ></script>
+	
+{% endblock  %}

@@ -1,0 +1,223 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}<title>The-CloudHeros - Details</title>{% endblock  %}
+
+{% block style %}
+
+<link rel="stylesheet" href="{% static 'posts/css/articleDetails.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+
+{% endblock  %}
+
+{% block content %}
+
+{% include 'include/nav.html' %}
+<!-- Deatils -->
+
+
+<main class="container-fluid main-single-content ">
+    <section class="row sinlge-content p-5">
+        <div class="col-md-8 left-single-content p-4">
+            <div class="sinlge-content-title">
+            {% if posts.sub_catagories == None %}
+                <a class="single-t-anchor" href="{% url 'ArticleSubPart' posts.catagories.article_main_catagories %}">{{posts.catagories.article_main_catagories|capfirst}}</a>         
+            {% else %}
+                <a class="single-t-anchor" href="{% url 'SubCatagoriesPart' posts.catagories.article_main_catagories posts.sub_catagories.slug %}">{{posts.sub_catagories.article_sub_catagories|capfirst}}</a>
+            {% endif %}
+                <h1 class="single-t-heading">{{posts.article_title|title}}</h1>
+                <span class="single-t-span">{{posts.article_author|capfirst}} | {{posts.post_date}}</span>
+            </div>
+            <div class="content-image">
+                <img src="{{posts.article_image.url}}" class="img-fluid" width="auto" height="500px"
+                    alt="{{posts.catagories|capfirst}} Image">
+            </div>
+            <div class="article-content">
+                <div class="article-content-div">
+                    <p class="article-paragraph text-justify">{{posts.article_content1|capfirst}}</p>
+
+
+                    <p class="article-paragraph text-justify">
+                        {{posts.article_content2|capfirst}}
+                    </p>
+
+
+
+                    <p class="article-paragraph text-justify">
+                        {{posts.article_content3|capfirst}}
+                    </p>
+
+
+                    <div class="{% if posts.extra_content == None %}extra_content{% endif %}">
+
+                        <img src="{{posts.extra_content.extra_content_image.url}}" width="auto" height="50px"
+                            class="img-fluid" alt="">
+                        <div>
+                            <h1 class="article-heading-submain">{{posts.extra_content.extra_content_title|title}}</h1>
+                            <p class="article-paragraph mt-5 text-justify">
+                                {{posts.extra_content.extra_content_article1|capfirst}}</p>
+                        </div>
+
+                        <p class="article-paragraph mt-5 text-justify">{{posts.extra_content.extra_content_article2|capfirst}}
+                        </p>
+                    </div>
+
+
+
+
+                    <div class="mt-5">
+                        <h4 class="related-last-catagories">Related Topics:</h4>
+                        {% if posts.sub_catagories == None %}
+                        <a class="related-last-catagories-anchor" href="{% url 'ArticleSubPart' posts.catagories.article_main_catagories %}">{{posts.catagories.article_main_catagories|capfirst}}</a>
+                        {% else %}
+                        <a class="related-last-catagories-anchor" href="{% url 'SubCatagoriesPart' posts.catagories.article_main_catagories posts.sub_catagories.slug %}">{{posts.sub_catagories.article_sub_catagories|capfirst}}</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="member-login">
+                <div class="row">
+                    <div class="member-login-div col-md-6 float-left" id="member-login-id">
+                    {% if user.is_authenticated %}
+                         <h3 class="member-login-heading">Thanks for joining with us :</h3>
+                        <p class="register-paragragh"> TheCloudHeros will send you some cool idea`s , articles
+                                     and newsLetters to your email. to be in touch with your purposes.  </p>
+                                     <i class="fas fa-smile-beam icon-login  "></i>
+                    {% else %}                       
+                         <h3 class="member-login-heading">Member Login :</h3>
+                        <form action="" class="form" id="form-ajax" method="POST">
+                        {% csrf_token %}
+                            <label for="email" class="label">Email: </label>
+                            <input class="form-control form-class" name="emailAjax" type="email"  placeholder="Email" required  id="email">
+                            <label for="password" class="label">password: </label>
+                            <input class="form-control form-class" type="password" name="password" required id="password"
+                                placeholder="password">
+
+                                <ul class=" errorBlock">
+                                    <li> The Password or Email is incorrect ! </li>
+                                </ul>
+                            <div class="div-membership-forgot">
+                                <a href="#" class="forgot-password">Forgot Password</a>
+                                <input type="submit" value="submit" class="btn btn-member">
+                            </div>
+
+                        </form>
+                    {% endif %}
+                    </div>
+
+                    <div class="col-md-6 float-left register-member">
+                        <h2 class="register-heading">BECOME A TheCloudHeros MEMBER:</h2>
+                        <p class="register-paragragh">Don't have a login but want to join the conversation? Sign up
+                            for a TheCloudHeros Account
+                        </p>
+                        <a href="{% url 'signup' %}" class="btn btn-register">Register</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-4 more-content">
+            <div class="more-content-div">
+                <div class="newsLetter-div">
+                    <div class="titlefield">
+                        <h2 class="newsLetter-heading">SUBSCRIBE TO THECLOUDHEROS NEWSLETTERS</h2>
+
+                        <p class="newsLetter-paragraph text-justify">The CloudHeros.com shares the deep technology
+                            articles from
+                            MVPs and our own experts every Friday. Register for this weekly newsletter filled with
+                            the most impactful the CloudHeros.com articles from that week.
+                            <br> <br> Sign up for our newsletters here.</p>
+                    </div>
+
+                    <div class="emailfield">
+                        <form action="{{request.path}}" class="form" method="POST" id="formNewsletter1">
+                        {% csrf_token %}
+                            <input class="form-control form-input" name="email" type="email" required id="email1" placeholder="Email">
+                            <button class="btn btn-newsLetter" type="submit">Subscribe</button>
+                        </form>
+                    </div>
+                </div>
+
+
+
+                <!--  Related Articles -->
+
+
+
+                <div class="moreArticles-div">
+                    <div class="more-heading-div">
+                        <h1 class="more-heading">Related Articles</h1>
+                        <hr class="horizontle">
+                    </div>
+                    {% if related.count == 0 %}
+                        <i class="fas fa-exclamation-triangle text-center text-danger icon-article-nothing"></i>
+                        <p class="heading-overview text-danger text-center ">We wil add some extra content soon ! </p>
+                    {% else %}
+                    {% for relatedPost in related %}
+                    <div class="row">
+                        <div class="col-md-12 mt-5 related-overview">
+                            <div class="col-md-6 related-sub-overview img-related float-left">
+                                <a href="{% url 'articleDetails' relatedPost.catagories relatedPost.slug %}"><img src="{{relatedPost.article_image.url}}" class="img-fluid"
+                                        width="auto" height="200px" alt=""></a>
+                            </div>
+                            <div class="col-md-6 related-sub-overview float-left mt-2">
+                                <span class="span-a-overview">{{relatedPost.article_caption}}</span>
+                                <h4 class="heading-overview"><a
+                                        href="{% url 'articleDetails' relatedPost.catagories relatedPost.slug %}">{{relatedPost.article_title|title|truncatewords:14}}</a></h4>
+                                <span class="date-overview">{{relatedPost.post_date}} |
+                                    {{relatedPost.article_author|capfirst}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="newsLetter-div2">
+            <div class="titlefield">
+                <h2 class="newsLetter-heading">SUBSCRIBE TO THECLOUDHEROS NEWSLETTERS</h2>
+
+                <p class="newsLetter-paragraph text-justify">The CloudHeros.com shares the deep technology articles
+                    from
+                    MVPs and our own experts every Friday. Register for this weekly newsletter filled with
+                    the most impactful the CloudHeros.com articles from that week.
+                    <br> <br> Sign up for our newsletters here.</p>
+            </div>
+
+            <div class="emailfield">
+                <form action="{{request.path}}" class="form" id="formNewsletter2" method="POST">
+                {% csrf_token %}
+                    <input class="form-control form-input" name="email" type="email" required id="email2" placeholder="Email">
+                    <button class="btn btn-newsLetter" type="submit">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </section>
+</main>
+
+
+
+
+{% include 'include/footer.html' %}
+
+{% endblock  %}
+
+
+
+{% block scripts %}
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" ></script>
+    {% comment %} <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9" ></script> {% endcomment %}
+	<script src="{% static 'bootstrap/jquery-3.5.1.min.js' %}" ></script>
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}" ></script>
+	<script src="{% static 'posts/js/articleDetails.js' %}"  ></script>
+	
+{% endblock  %}
