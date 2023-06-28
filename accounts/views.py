@@ -16,7 +16,7 @@ from django.utils.html import strip_tags
 from django.conf import settings
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.utils.encoding import force_bytes, force_text
+from django.utils.encoding import force_bytes, force_str
 import sweetify
 from.utils import generate_token
 
@@ -130,7 +130,7 @@ def signup_user(request):
 class ActivateAccountView (View):
     def get(self, request, uidb64, token):
         try:
-            uid = force_text(urlsafe_base64_decode(uidb64))
+            uid = force_str(urlsafe_base64_decode(uidb64))
             user = Account.objects.get(pk=uid)
         except Exception as identifier:
             user = None
@@ -160,7 +160,7 @@ def logout_user(request, url):
 class UnsubscribeAccountEmail (View):
     def get(self, request, uidb64, token):
         try:
-            uid = force_text(urlsafe_base64_decode(uidb64))
+            uid = force_str(urlsafe_base64_decode(uidb64))
             user = Account.objects.get(pk=uid)
         except Exception as identifier:
             user = None

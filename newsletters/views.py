@@ -8,7 +8,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.conf import settings
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.utils.encoding import force_bytes, force_text
+from django.utils.encoding import force_bytes, force_str
 from django.views import View
 import threading
 import sweetify
@@ -76,7 +76,7 @@ def subscribers_user(request):
 class UnsubscribeNewsLetterEmail (View):
     def get(self, request, uidb64):
         try:
-            uid = force_text(urlsafe_base64_decode(uidb64))
+            uid = force_str(urlsafe_base64_decode(uidb64))
             user = Subscribers.objects.get(pk=uid)
         except Exception as identifier:
             user = None
