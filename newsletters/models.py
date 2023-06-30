@@ -2,6 +2,8 @@ from django.db import models
 from .fields import LowerEmailField
 
 
+
+
 # subscribers
 class Subscribers(models.Model):
     email = LowerEmailField(verbose_name="email", max_length=60, unique=True)
@@ -23,6 +25,12 @@ class NewsletterMessage (models.Model):
 
     def __str__(self):
         return self.title
+       
 
     class Meta:
         verbose_name_plural = "NewsLetter Messages"
+
+        
+
+
+    

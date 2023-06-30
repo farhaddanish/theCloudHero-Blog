@@ -158,9 +158,9 @@
 
                                             <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:separate;line-height:100%;">
                                                 <tr>
-                                                    <td align="center" role="presentation" style="border:none;border-radius:3px;color:#fff;background-color:#6c63ff;cursor:auto;padding:15px 25px;" valign="middle">
+                                                    <td align="center" role="presentation" style="border:none;border-radius:3px;color:#fff;background-color:#fff;cursor:auto;padding:15px 25px;" valign="middle">
                                                         <p style="color:#fff;font-family:'Helvetica Neue',Arial,sans-serif;font-size:15px;font-weight:normal;line-height:120%;Margin:0;text-decoration:none;text-transform:none;">
-                                                            <a href="http://{{domain}}{% url 'activate' uidb64=uid token=token %}" style="color:#fff';text-decoration:none;">Confirm Your Email</a>
+                                                            <a href="{{domain}}{% url 'activate' uidb64=uid token=token %}" style="color:#fff';text-decoration:none;">Confirm Your Email</a>
                                                         </p>
                                                     </td>
                                                 </tr>
@@ -183,7 +183,7 @@
                                         <td align="center" style="font-size:0px;padding:10px 25px;padding-bottom:40px;word-break:break-word;">
 
                                             <div style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:16px;line-height:22px;text-align:center;color:#555;">
-                                                <a href="https://{{domain}}{% url 'activate' uidb64=uid token=token %}" style="color:#2F67F6">https://{{domain}}{% url 'activate' uidb64=uid token=token %}</a>
+                                                <a href="{{domain}}{% url 'activate' uidb64=uid token=token %}" style="color:#2F67F6">{{domain}}{% url 'activate' uidb64=uid token=token %}</a>
                                             </div>
 
                                         </td>
@@ -240,7 +240,7 @@
                                                         <td align="center" style="font-size:0px;padding:0;word-break:break-word;">
 
                                                             <div style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:12px;font-weight:300;line-height:1;text-align:center;color:#575757;">
-                                                                Some Firm Ltd, 35 Avenue. City 10115, USA
+                                                                Toronto, ON Canada
                                                             </div>
 
                                                         </td>

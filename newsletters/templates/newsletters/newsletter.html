@@ -3,7 +3,7 @@
   <head>
     <meta name="viewport" content="width=device-width" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Simple Transactional Email</title>
+    <title>NewsLetter Email</title>
     <style>
       /* -------------------------------------
           GLOBAL RESETS
@@ -333,7 +333,7 @@
     </style>
   </head>
   <body class="">
-    <span class="preheader">theCloudHeros it newsletters</span>
+    <span class="preheader">theCloudHeros newsletters</span>
     <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="body">
       <tr>
         <td>&nbsp;</td>
@@ -359,7 +359,7 @@
                                 <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                                   <tbody>
                                     <tr>
-                                      <td> <a href="https://TheCloudHeros.com/" target="_blank">More Articles!</a> </td>
+                                      <td> <a href="{{site}}" target="_blank">More Articles!</a> </td>
                                     </tr>
                                   </tbody>
                                 </table>
@@ -369,6 +369,7 @@
                         </table>
                         
                         <p>Thanks for being with us. we highly appreciate it 😊</p>
+              
                         <span>{{date|date}}</span>
                       </td>
                     </tr>
@@ -401,7 +402,7 @@
                                                             <td align="center" style="font-size:0px;padding:0;word-break:break-word;">
     
                                                                 <div style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:12px;font-weight:300;line-height:1;text-align:center;color:#575757;">
-                                                                    Some Firm Ltd, 35 Avenue. City 10115, USA
+                                                                   Toronto, ON Canada
                                                                 </div>
     
                                                             </td>
@@ -411,7 +412,7 @@
                                                             <td align="center" style="font-size:0px;padding:10px;word-break:break-word;">
      
                                                                 <div style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:12px;font-weight:300;line-height:1;text-align:center;color:#575757;">
-                                                                   <a href="http://127.0.0.1:8000/{% url 'unsubscribeNewsletterEmail' uid  %}" style="color:#575757" target="_blank" >Unsubscribe</a> from our emails 
+                                                                   <a href="{{site}}{% url 'unsubscribeNewsletterEmail' uid  %}" style="color:#575757" target="_blank" >Unsubscribe</a> from our emails 
                                                                 </div>
     
                                                             </td>

@@ -18,18 +18,11 @@ class ArticlePost_Admin (admin.ModelAdmin):
                                      'catagories', 'sub_catagories', 'article_content1', 'article_content2', 'article_content3', 'slug',)}),
         ('Extra Content', {'fields': ('extra_content',)}),
     )
-    # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
-    # overrides get_fieldsets to use this attribute when creating a user.
-    # add_fieldsets = (
-    #     (None, {
-    #         'classes': ('wide',),
-    #         'fields': ('email', 'first_Name', 'password', 'password_2',), }
-    #      ),
-    # )
+    
 
     search_fields = ['article_title']
     ordering = ['-post_date']
-    
+
     filter_horizontal = ()
 
 

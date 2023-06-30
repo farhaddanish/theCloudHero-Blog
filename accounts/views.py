@@ -19,6 +19,8 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
 import sweetify
 from.utils import generate_token
+from django.contrib.sites.models import Site
+
 
 
 # for fasting email
@@ -48,6 +50,7 @@ def sendArticle_user(sender, instance, created, **kwargs):
                 'descibtion': describtion,
                 'slug': slug,
                 'catagories': catagories,
+                "site" : Site.objects.get_current(),
                 'uid':  uid,
                 'token': generate_token.make_token(i)
             })
@@ -64,7 +67,6 @@ def sendArticle_user(sender, instance, created, **kwargs):
 
 # Login user
 valid = False
-
 
 def login_user(request):
     global valid
@@ -116,7 +118,7 @@ def signup_user(request):
                 [user.email])
             html_email.attach_alternative(html_content, "text/html")
             EmailThread(html_email).start()
-            messages.add_message(request, messages.INFO,
+            messages.add_message(request, messages.SUCCESS,
                                  "Please verify your Email")
             return redirect('login')
     else:

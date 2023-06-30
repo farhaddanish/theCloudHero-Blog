@@ -47,12 +47,12 @@ class ArticleSubCatagories (models.Model):
 # Article_main_catagories
 class ArticleMainCatagories (models.Model):
     object = (
-        ('Windows', 'Windows'),
+        ('Programming', 'Programming'),
         ('Cloud', 'Cloud'),
-        ('Server', 'Server'),
-        ('Office', 'Office'),
-        ('Storage', 'Storage'),
-        ('SharePoint', 'SharePoint'),
+        ('Security', 'Security'),
+        ('Windows', 'Windows'),
+        ('Microsoft 365', 'Microsoft 365'),
+        ('Linux', 'Linux'),
     )
     article_main_catagories = models.CharField(
         verbose_name="Article Main Catagories", choices=object, null=True, blank=False, unique=True, max_length=50)
@@ -67,15 +67,13 @@ class ArticleMainCatagories (models.Model):
         verbose_name_plural = "Article Main Catagories"
 
 
-
 # Artcile_extra_content
 class ArticleExtraContent (models.Model):
     extra_content_title = models.CharField(
         verbose_name="Extra - title", max_length=100, null=False, blank=False)
 
     extra_content_image = models.ImageField(
-        verbose_name="Extra - Image", null=False,upload_to="ExtraImages")
-    
+        verbose_name="Extra - Image", null=False, upload_to="ExtraImages")
 
     extra_content_article1 = models.TextField(
         verbose_name="Extra - Article-part-1", null=False, blank=False)
@@ -83,20 +81,17 @@ class ArticleExtraContent (models.Model):
     extra_content_article2 = models.TextField(
         verbose_name="Extra - Article-part-2", blank=True, null=True)
 
-    
     def __str__(self):
         return f"{self.extra_content_title.capitalize()}"
 
-    def save(self,*args, **kwargs):
+    def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
         img = Image.open(self.extra_content_image.path)
-        resized_image = img.resize((872,491))
+        resized_image = img.resize((872, 491))
         resized_image.save(self.extra_content_image.path)
 
     class Meta:
         verbose_name_plural = "Extra - Contents"
-
-
 
 
 # Article_posts
@@ -128,11 +123,10 @@ class ArticlePost (models.Model):
     extra_content = models.OneToOneField(
         ArticleExtraContent, verbose_name="Extra - Content", on_delete=models.SET_NULL, null=True, blank=True)
 
-
-    def save(self,*args, **kwargs):
+    def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
         img = Image.open(self.article_image.path)
-        resized_image = img.resize((872,491))
+        resized_image = img.resize((872, 491))
         resized_image.save(self.article_image.path)
 
     def __str__(self):

@@ -12,6 +12,6 @@ urlpatterns = [
     path('catagories/<str:text2>/<slug:slug2>/',
          views.articleSubCatagoriePart, name="SubCatagoriesPart"),
 
-    path('loginWithAjax', views.ajaxLogin, name="ajaxLogin"),
+    path('loginWithAjax/', views.ajaxLogin, name="ajaxLogin"),
 
 ]

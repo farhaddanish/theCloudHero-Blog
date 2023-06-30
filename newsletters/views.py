@@ -1,6 +1,10 @@
-from .models import Subscribers, NewsletterMessage
+from .models import Subscribers
 from django.shortcuts import render
 from django.http.response import JsonResponse
+from django.utils.http import urlsafe_base64_decode
+from django.utils.encoding import force_bytes, force_str
+from django.views import View
+from .models import Subscribers, NewsletterMessage
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
@@ -9,9 +13,9 @@ from django.dispatch import receiver
 from django.conf import settings
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
-from django.views import View
 import threading
 import sweetify
+from django.contrib.sites.models import Site
 
 
 # for fasting email
@@ -34,6 +38,7 @@ def sendArticle_user(sender, instance, created, **kwargs):
         message = instance.message
         date = instance.date_send
         sender = settings.EMAIL_HOST_USER
+        site =  Site.objects.get_current()
 
         for i in toUser:
             uid = urlsafe_base64_encode(force_bytes(i.pk))
@@ -42,7 +47,8 @@ def sendArticle_user(sender, instance, created, **kwargs):
                 'title': title,
                 'message': message,
                 'date': date,
-                'uid': uid
+                'uid': uid,
+                "site": site
 
             })
             text_content = strip_tags(html_content)
@@ -58,18 +64,17 @@ def sendArticle_user(sender, instance, created, **kwargs):
 
 # subscribe user
 def subscribers_user(request):
-    if request.method == "POST" and request.is_ajax():
+    if request.method == "POST":
         email = request.POST['email']
         if Subscribers.objects.filter(email=email).exists():
             return JsonResponse({
-                    "userExist": True
-                })
+                "userExist": True
+            })
         else:
             Subscribers.objects.create(email=email)
             return JsonResponse({
                 "subscribed": True,
             })
-        
 
 
 # unsubscribe account email
@@ -86,5 +91,3 @@ class UnsubscribeNewsLetterEmail (View):
             return render(request, 'newsletters/unsubscribe.html')
 
         return render(request, 'newsletters/invalid.html')
-
-

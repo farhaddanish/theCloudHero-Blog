@@ -160,9 +160,9 @@ def searchFunction(request):
 
 # ajxa Login
 def ajaxLogin(request):
-    if request.method == "POST" and request.is_ajax():
+    if request.method == "POST":
         email = request.POST.get('email')
-        
+
         password = request.POST.get('password')
         form = authenticate(request, email=email, password=password)
         if form is not None:

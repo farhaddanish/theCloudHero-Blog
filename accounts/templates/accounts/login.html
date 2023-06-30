@@ -20,7 +20,7 @@
 			<div class="wrap-login100">
 			 {% if messages %}
 				{% for message in  messages %}
-					<div class="alert alert-danger alert-dismissible fade show mb-5" data-dismissible>
+					<div class="alert {{message.tags}} alert-dismissible fade show mb-5" data-dismissible>
 						{{message}}
 						<button type="button" class="close" data-dismiss="alert" aria-label="close">
 							<span aria-hidden="true">&times;</span>

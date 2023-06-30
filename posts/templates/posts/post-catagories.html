@@ -19,7 +19,11 @@
         <div class="header-container ">
             {% if catagories == "windows" %}
             <i class="fab fa-{{catagories|lower}} icon-haeding"></i>
-            {% else %}
+            {% elif catagories == "python" %} 
+            <i class="fab fa-brands fa-python icon-haeding"></i>
+            {% elif catagories == "cloud" %}
+            <i class="fas fa-regular fa-cloud icon-haeding"></i>
+            {% else %} 
             <i class="fas fa-{{catagories|lower}} icon-haeding"></i>
             {% endif %}
 
@@ -152,7 +156,7 @@
         <div class="newsLetter-div">
             <div class="titlefield">
                 <h1 class="newsLetter-heading">SUBSCRIBE TO THECLOUDHEROS NEWSLETTERS</h1>
-                <p class="newsLetter-paragraph">Whether it’s Security or Cloud Computing, we have the
+                <p class="newsLetter-paragraph">Whether it’s Programming or Cloud Computing, we have the
                     know-how for you.
                     <br> Sign up for our newsletters here.</p>
             </div>
