@@ -14,12 +14,13 @@ from django.core.mail import EmailMultiAlternatives
 from django.template.loader import  render_to_string
 from django.utils.html import strip_tags
 from django.conf import settings
-from django.contrib.sites.shortcuts import get_current_site
+from django.contrib.sites.models import Site
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
 import sweetify
 from.utils import generate_token
 from django.contrib.sites.models import Site
+
 
 
 
@@ -42,6 +43,7 @@ def sendArticle_user(sender, instance, created, **kwargs):
         slug = instance.slug
         sender = settings.EMAIL_HOST_USER
         user = Account.objects.filter(is_active=True, is_admin=False)
+
 
         for i in user:
             uid= urlsafe_base64_encode(force_bytes(i.pk))
@@ -101,7 +103,7 @@ def signup_user(request):
             user = Account.objects.get(email=email)
             user.is_active = False
             user.save()
-            current_site = get_current_site(request)
+            current_site = Site.objects.get_current()
             html_content = render_to_string("accounts/verfication.html", {
 
                 'user': user,
